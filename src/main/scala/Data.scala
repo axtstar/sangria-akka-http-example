@@ -1,3 +1,5 @@
+import java.time.LocalDateTime
+
 object Episode extends Enumeration {
   val NEWHOPE, EMPIRE, JEDI = Value
 }
@@ -10,11 +12,13 @@ trait Character {
 }
 
 case class Human(
-  id: String,
-  name: Option[String],
-  friends: List[String],
-  appearsIn: List[Episode.Value],
-  homePlanet: Option[String]) extends Character
+                  id: String,
+                  name: Option[String],
+                  friends: List[String],
+                  appearsIn: List[Episode.Value],
+                  homePlanet: Option[String],
+                  current_time:LocalDateTime
+                ) extends Character
 
 case class Droid(
   id: String,
@@ -32,9 +36,9 @@ class CharacterRepo {
   def getHuman(id: String): Option[Human] = humans.find(c ⇒ c.id == id)
 
   def getDroid(id: String): Option[Droid] = droids.find(c ⇒ c.id == id)
-  
+
   def getHumans(limit: Int, offset: Int): List[Human] = humans.drop(offset).take(limit)
-  
+
   def getDroids(limit: Int, offset: Int): List[Droid] = droids.drop(offset).take(limit)
 }
 
@@ -45,31 +49,41 @@ object CharacterRepo {
       name = Some("Luke Skywalker"),
       friends = List("1002", "1003", "2000", "2001"),
       appearsIn = List(Episode.NEWHOPE, Episode.EMPIRE, Episode.JEDI),
-      homePlanet = Some("Tatooine")),
+      homePlanet = Some("Tatooine"),
+      current_time = LocalDateTime.now()
+    ),
     Human(
       id = "1001",
       name = Some("Darth Vader"),
       friends = List("1004"),
       appearsIn = List(Episode.NEWHOPE, Episode.EMPIRE, Episode.JEDI),
-      homePlanet = Some("Tatooine")),
+      homePlanet = Some("Tatooine"),
+      current_time = LocalDateTime.now()
+    ),
     Human(
       id = "1002",
       name = Some("Han Solo"),
       friends = List("1000", "1003", "2001"),
       appearsIn = List(Episode.NEWHOPE, Episode.EMPIRE, Episode.JEDI),
-      homePlanet = None),
+      homePlanet = None,
+      current_time = LocalDateTime.now()
+    ),
     Human(
       id = "1003",
       name = Some("Leia Organa"),
       friends = List("1000", "1002", "2000", "2001"),
       appearsIn = List(Episode.NEWHOPE, Episode.EMPIRE, Episode.JEDI),
-      homePlanet = Some("Alderaan")),
+      homePlanet = Some("Alderaan"),
+      current_time = LocalDateTime.now()
+    ),
     Human(
       id = "1004",
       name = Some("Wilhuff Tarkin"),
       friends = List("1001"),
       appearsIn = List(Episode.NEWHOPE, Episode.EMPIRE, Episode.JEDI),
-      homePlanet = None)
+      homePlanet = None,
+      current_time = LocalDateTime.now()
+    )
   )
 
   val droids = List(

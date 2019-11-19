@@ -68,7 +68,10 @@ object SchemaDefinition {
           resolve = _.value.appearsIn map (e ⇒ Some(e))),
         Field("homePlanet", OptionType(StringType),
           Some("The home planet of the human, or null if unknown."),
-          resolve = _.value.homePlanet)
+          resolve = _.value.homePlanet),
+        Field("current_time", Types.LocalDateTimeType,
+          Some("current time."),
+          resolve = _.value.current_time),
       ))
 
   val Droid = ObjectType(

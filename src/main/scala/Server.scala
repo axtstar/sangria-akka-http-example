@@ -102,6 +102,21 @@ object Server extends App with CorsSupport {
             }
           }
         }
+      } ~
+      path("query"){
+        get {
+          import sangria.ast._
+          import sangria.macros._
+          val queryAst: Document =
+            graphql"""
+            {
+              humans {
+                 name
+              }
+            }
+          """
+          executeGraphQL(queryAst, None, Json.obj(), false)
+        }
       }
     } ~
     (get & pathEndOrSingleSlash) {
